@@ -3,195 +3,179 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tria — a terceira busca</title>
-  <meta name="description" content="O paciente já perguntou ao vizinho e ao Google. Agora pergunta a um modelo. A Tria lê quem é citado na sua cidade e escreve as três peças para a sua clínica poder ser nomeada.">
+  <title>Tria</title>
+  <meta name="description" content="Quando alguém pergunta no ChatGPT qual é a melhor clínica da sua cidade, outra clínica aparece. A Tria te mostra essa resposta e escreve o que mudar no site e no Google.">
   <link rel="canonical" href="https://tria.rocks/">
-  <meta property="og:title" content="Tria — a terceira busca">
-  <meta property="og:description" content="Você existe na cidade. Ainda não existe na resposta. A Leitura Tria: uma clínica, uma cidade, 24 horas.">
+  <meta property="og:title" content="Tria">
+  <meta property="og:description" content="O ChatGPT já indica uma clínica na sua cidade. A Tria te mostra qual, e o que escrever para a sua poder ser citada.">
   <meta property="og:url" content="https://tria.rocks/">
   <meta property="og:type" content="website">
   <style>
     :root {
-      --night: #16130f;
-      --paper: #efe7d8;
-      --cream: #f7f1e6;
-      --line: #d4cbb8;
-      --mute: #6e6658;
-      --ink: #1a1713;
-      --ember: #c45c26;
-      --ember-soft: #e8d3c4;
+      --bg: #f3eee4;
+      --ink: #1c1915;
+      --soft: #5c564c;
+      --line: #d8d0c2;
+      --white: #fbf7ef;
+      --ember: #b94e1c;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
-      font: 18px/1.5 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      font: 19px/1.55 Georgia, "Times New Roman", serif;
     }
     a { color: inherit; }
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 1.4rem;
-      background: var(--night); color: var(--cream);
+    header {
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 1.4rem 1.4rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
     }
-    .mark { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
-    .bars { display: flex; gap: 4px; align-items: flex-end; height: 16px; }
-    .bars i { display: block; width: 3px; background: var(--ember); }
-    .bars i:nth-child(1) { height: 8px; }
-    .bars i:nth-child(2) { height: 12px; }
-    .bars i:nth-child(3) { height: 16px; }
-    .word { font-family: "Arial Narrow", Arial, sans-serif; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; font-size: .72rem; }
-    .nav-cta {
-      font-family: Arial, sans-serif; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
-      text-decoration: none; border: 1px solid rgba(247,241,230,.35); padding: .5rem .75rem;
+    .logo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      text-decoration: none;
     }
-    .hero { background: var(--night); color: var(--cream); padding: 3.2rem 1.4rem 3.6rem; }
-    .hero-inner { max-width: 44rem; margin: 0 auto; }
-    .kicker { font-family: Arial, sans-serif; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ember); margin: 0 0 .8rem; }
-    h1 { font-size: clamp(2.3rem, 8vw, 3.6rem); line-height: 1.02; font-weight: 600; margin: 0 0 1.1rem; }
-    .deck { font-size: 1.15rem; max-width: 36rem; color: rgba(247,241,230,.82); margin: 0 0 2rem; }
-    .cta {
-      display: inline-block; text-decoration: none;
-      background: var(--ember); color: #fff8f2;
-      font-family: Arial, sans-serif; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
-      padding: 1rem 1.2rem;
+    .top-mail {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .78rem;
+      color: var(--soft);
+      text-decoration: none;
     }
-    .cta:hover { background: #a64b1d; }
-    .ghost { margin-left: .8rem; font-family: Arial, sans-serif; font-size: .8rem; color: rgba(247,241,230,.55); text-decoration: none; }
-    .scene {
-      margin: 2.4rem 0 0;
-      background: #1f1b16;
-      border: 1px solid rgba(247,241,230,.1);
-      padding: 1.1rem 1.15rem 1.2rem;
-      max-width: 28rem;
+    main { max-width: 40rem; margin: 0 auto; padding: 3.2rem 1.4rem 4rem; }
+    h1 {
+      font-size: clamp(2rem, 6.4vw, 2.85rem);
+      line-height: 1.12;
+      font-weight: 500;
+      margin: 0 0 1.2rem;
     }
-    .scene .lbl { font-family: Arial, sans-serif; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(247,241,230,.4); margin: 0 0 .7rem; }
-    .q { font-size: .95rem; color: rgba(247,241,230,.55); margin: 0 0 .8rem; }
-    .a { margin: 0; font-size: 1.05rem; }
-    .blur { filter: blur(4px); user-select: none; color: var(--ember-soft); }
-
-    .wrap { max-width: 44rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
-    h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.15; font-weight: 600; margin: 0 0 .8rem; }
-    .sec { margin: 0 0 3.2rem; }
-    .sec p { margin: 0 0 1rem; }
-    .mute { color: var(--mute); }
-
-    .eras { display: grid; gap: .7rem; }
-    @media (min-width: 700px) { .eras { grid-template-columns: 1fr 1fr 1fr; } }
-    .era { background: var(--cream); border: 1px solid var(--line); padding: 1.05rem 1rem 1.15rem; }
-    .era.on { border-color: var(--ember); background: #fff8f1; }
-    .era .n { font-family: Arial, sans-serif; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ember); }
-    .era h3 { margin: .35rem 0 .35rem; font-size: 1.15rem; }
-    .era p { margin: 0; font-size: .95rem; color: var(--mute); }
-
-    .three { display: grid; gap: 1.2rem; }
-    @media (min-width: 700px) { .three { grid-template-columns: 1fr 1fr 1fr; } }
-    .cut h3 { margin: .3rem 0 .35rem; font-size: 1.2rem; }
-    .cut p { margin: 0; color: var(--mute); font-size: .98rem; }
-    .cut .n { font-family: Arial, sans-serif; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ember); }
-
-    .band { background: var(--night); color: var(--cream); padding: 2.4rem 1.4rem; }
-    .band-inner { max-width: 44rem; margin: 0 auto; }
-    .band h2 { color: var(--cream); }
-    .band p { color: rgba(247,241,230,.78); }
-
+    .lead { font-size: 1.2rem; margin: 0 0 1.8rem; }
+    .btn {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--white);
+      text-decoration: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .82rem;
+      padding: .95rem 1.15rem;
+    }
+    .btn:hover { background: var(--ember); }
+    .note { margin: .8rem 0 0; color: var(--soft); font-size: 1rem; }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 3rem 0;
+    }
+    h2 {
+      font-size: 1.55rem;
+      line-height: 1.25;
+      font-weight: 500;
+      margin: 0 0 1rem;
+    }
+    p { margin: 0 0 1rem; }
+    .soft { color: var(--soft); }
+    ol {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+    }
+    ol li {
+      counter-increment: item;
+      padding: 1rem 0 1rem 2.2rem;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+    ol li:before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 1.05rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .75rem;
+      color: var(--ember);
+    }
+    .ask {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 1.15rem 1.2rem;
+      margin: 1.6rem 0 0;
+    }
+    .ask small {
+      display: block;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .68rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: .45rem;
+    }
     footer {
-      font-family: Arial, sans-serif; font-size: .72rem; color: var(--mute);
-      max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 3rem;
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 0 1.4rem 3rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .78rem;
+      color: var(--soft);
     }
-    footer a { color: var(--ink); }
+    footer a { color: var(--ink); text-decoration: none; }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <a class="mark" href="/">
-      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="word">Tria</span>
-    </a>
-    <a class="nav-cta" href="mailto:foundertriamkt@gmail.com?subject=A%20Leitura%20Tria">Pedir a Leitura</a>
-  </nav>
-
-  <header class="hero">
-    <div class="hero-inner">
-      <p class="kicker">A terceira busca</p>
-      <h1>Você existe na cidade. Ainda não existe na resposta.</h1>
-      <p class="deck">O paciente já perguntou ao vizinho. Depois ao Google. Agora pergunta a um modelo. Se o nome que volta não é o seu, a consulta acabou antes da recepção.</p>
-      <a class="cta" href="mailto:foundertriamkt@gmail.com?subject=A%20Leitura%20Tria&body=Quero%20a%20Leitura%20da%20minha%20cidade.%20Cl%C3%ADnica%2C%20nicho%20e%20cidade%3A">Quero a Leitura da minha cidade</a>
-      <a class="ghost" href="#leitura">Como a Tria lê</a>
-
-      <div class="scene" aria-hidden="true">
-        <p class="lbl">O que o modelo responde hoje</p>
-        <p class="q">“melhor clínica de estética em Campinas”</p>
-        <p class="a">Uma das mais citadas nesta cidade é a <span class="blur">Clínica do Centro</span>.</p>
-      </div>
-    </div>
+  <header>
+    <a class="logo" href="/">Tria</a>
+    <a class="top-mail" href="mailto:foundertriamkt@gmail.com">Escrever</a>
   </header>
 
-  <main class="wrap">
-    <section class="sec">
-      <h2>Três buscas. A terceira não tem placa na rua.</h2>
-      <p class="mute">A Tria existe para essa conversa. Não para anúncio. Não para ranquear. Para o momento em que alguém pede um nome e o modelo já tem um.</p>
-      <div class="eras">
-        <div class="era">
-          <div class="n">Uma</div>
-          <h3>O vizinho</h3>
-          <p>Indicação de quem já foi. Lenta, local, humana.</p>
-        </div>
-        <div class="era">
-          <div class="n">Duas</div>
-          <h3>O Google</h3>
-          <p>Estrelas, mapa, anúncio. Vocês já pagam essa fila.</p>
-        </div>
-        <div class="era on">
-          <div class="n">Três</div>
-          <h3>O modelo</h3>
-          <p>Uma frase. Um nome. Quase nunca o da recepção.</p>
-        </div>
-      </div>
-    </section>
+  <main>
+    <h1>O ChatGPT já indica uma clínica na sua cidade.</h1>
+    <p class="lead">Quase nunca é a sua. A Tria pergunta de verdade, te manda a resposta, e escreve o que colocar no site e no Google.</p>
+    <a class="btn" href="mailto:foundertriamkt@gmail.com?subject=Tria&body=Oi.%20Quero%20ver%20o%20que%20o%20ChatGPT%20responde%20sobre%20a%20minha%20cidade.%0A%0ACl%C3%ADnica%3A%0AO%20que%20voc%C3%AAs%20fazem%3A%0ACidade%3A">Quero ver a resposta da minha cidade</a>
+    <p class="note">Em um dia útil. Sem instalar nada.</p>
 
-    <section class="sec" id="leitura">
-      <h2>A Leitura. Uma clínica, uma cidade.</h2>
-      <p class="mute">Em 24 horas a Tria devolve três cortes. Sem instalar nada. Sem sentar na cadeira de vocês.</p>
-      <div class="three">
-        <div class="cut">
-          <div class="n">Ver</div>
-          <h3>O recorte</h3>
-          <p>Perguntamos de verdade. Você vê quem é nomeado hoje, na sua cidade, no seu nicho. Sem inventar citação.</p>
-        </div>
-        <div class="cut">
-          <div class="n">Nomear</div>
-          <h3>A frase</h3>
-          <p>O que um modelo precisaria conseguir dizer sobre vocês: nome, lugar, o que fazem, para quem.</p>
-        </div>
-        <div class="cut">
-          <div class="n">Corrigir</div>
-          <h3>Os três textos</h3>
-          <p>FAQ, perfil do Google, um bloco do site. Prontos para colar. Uma reescrita, se o tom não couber.</p>
-        </div>
-      </div>
-    </section>
+    <div class="ask">
+      <small>O que as pessoas já perguntam</small>
+      Melhor clínica de estética em Campinas.<br>
+      Melhor dentista em Londrina.<br>
+      Melhor fisioterapia perto de mim.
+    </div>
 
-    <section class="sec">
-      <h2>Para quem a recepção já está cheia e a resposta, vazia.</h2>
-      <p>Clínica pequena de estética, odontologia ou fisioterapia. Já anuncia. Já tem Google. Ainda some quando a pergunta vai para um chat.</p>
-      <p class="mute">Se não há site nem perfil, a Leitura não tem onde pousar.</p>
-    </section>
+    <hr>
+
+    <h2>As pessoas pediam indicação para um amigo. Depois pesquisavam no Google. Agora perguntam para o ChatGPT.</h2>
+    <p>Se o nome que volta não é o da sua clínica, essa pessoa nem chega na recepção. O anúncio que você já paga fica para trás de uma frase.</p>
+    <p class="soft">A Tria trabalha essa conversa. Não faz anúncio. Não promete te colocar no ChatGPT. Mostra o que ele diz hoje e o texto que falta.</p>
+
+    <hr>
+
+    <h2>O que você recebe</h2>
+    <ol>
+      <li>A resposta de hoje, na sua cidade, no que vocês fazem.</li>
+      <li>Três textos prontos para colar: perguntas frequentes, Google e um parágrafo do site.</li>
+      <li>Uma troca, se algum texto não parecer com vocês.</li>
+    </ol>
+
+    <hr>
+
+    <h2>Para clínicas que já atendem e ainda somem nessa pergunta.</h2>
+    <p>Estética, odontologia, fisioterapia. Quem já tem site e Google. Se isso ainda não existe, a Tria não tem o que corrigir.</p>
+
+    <hr>
+
+    <h2>Se fizer sentido, escreve.</h2>
+    <p>Conta o nome da clínica, o que vocês fazem e a cidade. A Tria responde com o próximo passo.</p>
+    <a class="btn" href="mailto:foundertriamkt@gmail.com?subject=Tria&body=Oi.%20Quero%20ver%20o%20que%20o%20ChatGPT%20responde%20sobre%20a%20minha%20cidade.%0A%0ACl%C3%ADnica%3A%0AO%20que%20voc%C3%AAs%20fazem%3A%0ACidade%3A">Escrever para a Tria</a>
   </main>
 
-  <section class="band">
-    <div class="band-inner">
-      <h2>Não vendemos o milagre de ser escolhido.</h2>
-      <p>Ninguém controla o modelo. Vendemos o recorte de hoje e a linguagem que torna uma clínica possível de citar. O resto é o paciente, a cidade e o tempo.</p>
-      <p style="margin:1.4rem 0 0;">
-        <a class="cta" href="mailto:foundertriamkt@gmail.com?subject=A%20Leitura%20Tria&body=Quero%20a%20Leitura%20da%20minha%20cidade.%20Cl%C3%ADnica%2C%20nicho%20e%20cidade%3A">Pedir a Leitura</a>
-      </p>
-    </div>
-  </section>
-
   <footer>
-    <p>Tria · <a href="mailto:foundertriamkt@gmail.com">foundertriamkt@gmail.com</a></p>
-    <p>Operação por e-mail. Sem nome de pessoa. Sem garantia de resultado. Opt-out: responda “não”.</p>
+    <a href="mailto:foundertriamkt@gmail.com">foundertriamkt@gmail.com</a>
   </footer>
 </body>
 </html>
